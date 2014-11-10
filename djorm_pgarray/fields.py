@@ -66,6 +66,7 @@ class ArrayField(six.with_metaclass(models.SubfieldBase, models.Field)):
             self._type_cast = lambda x: x
 
         self._dimension = kwargs.pop("dimension", 1)
+        self._delim = kwargs.pop("delim", None)
         kwargs.setdefault("blank", True)
         kwargs.setdefault("null", True)
         kwargs.setdefault("default", None)
@@ -78,6 +79,7 @@ class ArrayField(six.with_metaclass(models.SubfieldBase, models.Field)):
 
     def formfield(self, **params):
         params.setdefault("form_class", ArrayFormField)
+        params.setdefault("delim", self._delim)
 
         # Django 1.5 does not support "choices_form_class" parameter
         if django.VERSION[:2] >= (1, 6):
@@ -121,6 +123,8 @@ class ArrayField(six.with_metaclass(models.SubfieldBase, models.Field)):
             kwargs["dbtype"] = self._array_type
         if self._dimension != 1:
             kwargs["dimension"] = self._dimension
+        if self._delim != None:
+            kwargs["delim"] = self._delim
         if self._explicit_type_cast:
             kwargs["type_cast"] = self._type_cast
         if self.blank:
@@ -352,6 +356,7 @@ try:
             {
                 "dbtype": ["_array_type", {"default": "int"}],
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
@@ -362,6 +367,7 @@ try:
             [],           # positional params
             {
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
@@ -372,6 +378,7 @@ try:
             [],           # positional params
             {
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
@@ -382,6 +389,7 @@ try:
             [],           # positional params
             {
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
@@ -392,6 +400,7 @@ try:
             [],           # positional params
             {
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
@@ -402,6 +411,7 @@ try:
             [],           # positional params
             {
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
@@ -412,6 +422,7 @@ try:
             [],           # positional params
             {
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
@@ -422,6 +433,7 @@ try:
             [],           # positional params
             {
                 "dimension": ["_dimension", {"default": 1}],
+                "delim": ["delim", {"default": ","}],
                 "null": ["null", {"default": True}],
             }
         )
